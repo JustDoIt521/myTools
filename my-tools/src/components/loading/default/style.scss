@@ -1,0 +1,51 @@
+.dloading {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    
+    outline: 1px solid #000;
+    [class^="dloading-border-"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+        .dloading-item {
+            width: 15%;
+            height: 15%;
+            margin: 0 auto;
+            border-radius: 50%;
+
+            background-color: #333;
+
+            -webkit-animation: dloading 1.2s infinite ease-in-out both;
+            animation: dloading 1.2s infinite ease-in-out both;
+
+            opacity: 0;
+        }
+    }
+    @for $i from 1 through 8 {
+        .dloading-border-#{$i} {
+            transform: rotate($i * 45deg);
+        }
+        @if $i > 1 {
+            .dloading-border-#{$i} .dloading-item {
+                animation-delay: (-1.35 + 0.15 * $i) * 1s;
+                -webkit-animation-delay: (-1.35 + 0.15 * $i) * 1s;
+            }
+        }
+    }
+    @-webkit-keyframes dloading {
+        0% {opacity: 0;}
+        33% {opacity: 0;}
+        66% {opacity: 1;}
+        100% {opacity: 0;}
+    }
+    @keyframes dloading{
+        0% {opacity: 0;}
+        33% {opacity: 0;}
+        66% {opacity: 1;}
+        100% {opacity: 0;}
+    }
+}
