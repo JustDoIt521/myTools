@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <div v-dloading="dloading"></div>
+    <div v-dloading="dloading" class="temp">
+      333333
+    </div>
     <button @click="changeStatus">changeLoading</button>
     <!-- <router-view/> -->
     <div v-loading="dloading"
-      style="width: 300px;height:300px; position: relative;">
+      style="width: 300px;height:100px; position: relative;">
     </div>
   </div>
 </template>
@@ -30,5 +32,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  .temp {
+    width: 150px;
+    height: 150px;
+    outline: 1px solid #333;
+  }
 }
 </style>
