@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <div v-dloading="dloading" class="temp">
-      333333
-    </div>
     <button @click="changeStatus">changeLoading</button>
-    <div v-loading="dloading"
-      style="width: 300px;height:100px; position: relative;">
+    <div v-pianoLoading="dloading"
+      style="width: 300px;height:100px; position: relative; background-color: #333;">
+    </div>
+    <!-- <piano-loading></piano-loading> -->
+    <!-- <div v-dloading="dloading" class="temp">
+      333333
     </div>
     <div v-loading="dloading"
       style="width: 50px;height: 20px; position: relative; background-color: #333;">
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

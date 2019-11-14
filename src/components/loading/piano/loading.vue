@@ -1,15 +1,14 @@
 <template>
-    <div class="mt-dloading" v-show="isShow">
-        <div class="mt-dloading-position">
-            <div v-for="index in 8" :key="index" :class="`mt-dloading-border-${index}`">
-                <div class="mt-dloading-item"></div>
+    <div class="mt-piano-loading" v-show="isShow">
+        <div class="mt-piano">
+            <div v-for="piano in 5" :key="piano" :class="`mt-piano-key mt-piano-key-${piano}`">
             </div>
         </div>
     </div>
 </template>
 <script>
 export default {
-    name: 'dloading',
+    name: 'piano-loading',
     data () {
         return {
             isShow: false
