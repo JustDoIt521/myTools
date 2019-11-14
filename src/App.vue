@@ -4,9 +4,11 @@
       333333
     </div>
     <button @click="changeStatus">changeLoading</button>
-    <!-- <router-view/> -->
     <div v-loading="dloading"
       style="width: 300px;height:100px; position: relative;">
+    </div>
+    <div v-loading="dloading"
+      style="width: 50px;height: 20px; position: relative; background-color: #333;">
     </div>
   </div>
 </template>
@@ -33,8 +35,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   .temp {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 50px;
     outline: 1px solid #333;
   }
 }

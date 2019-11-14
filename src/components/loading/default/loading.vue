@@ -1,7 +1,9 @@
 <template>
     <div class="mt-dloading" v-show="isShow">
-        <div v-for="index in 8" :key="index" :class="`mt-dloading-border-${index}`">
-            <div class="mt-dloading-item"></div>
+        <div class="mt-dloading-position">
+            <div v-for="index in 8" :key="index" :class="`mt-dloading-border-${index}`">
+                <div class="mt-dloading-item"></div>
+            </div>
         </div>
     </div>
 </template>

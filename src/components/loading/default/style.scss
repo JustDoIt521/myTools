@@ -7,40 +7,48 @@
     left: 0;
     
     background-color: rgba(255, 255, 255, 0.8);
-
-    [class^="mt-dloading-border-"] {
+    .mt-dloading-position {
         position: absolute;
-        left: 0;
-        top: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
 
-        width: 100%;
-        height: 100%;
-        .mt-dloading-item {
-            @include default-color-bg;
+        width: 2rem;
+        height: 2rem;
+        
+        [class^="mt-dloading-border-"] {
+            position: absolute;
 
-            width: 15%;
-            height: 15%;
-            margin: 0 auto;
-            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            .mt-dloading-item {
+                @include default-color-bg;
+
+                width: 15%;
+                height: 15%;
+                margin: 0 auto;
+                border-radius: 50%;
 
 
-            -webkit-animation: dloading 1.2s infinite ease-in-out both;
-            animation: dloading 1.2s infinite ease-in-out both;
+                -webkit-animation: dloading 1.2s infinite ease-in-out both;
+                animation: dloading 1.2s infinite ease-in-out both;
 
-            opacity: 0;
+                opacity: 0;
+            }
         }
-    }
-    @for $i from 1 through 8 {
-        .mt-dloading-border-#{$i} {
-            transform: rotate($i * 45deg);
-        }
-        @if $i > 1 {
-            .mt-dloading-border-#{$i} .mt-dloading-item {
-                animation-delay: (-1.35 + 0.15 * $i) * 1s;
-                -webkit-animation-delay: (-1.35 + 0.15 * $i) * 1s;
+        @for $i from 1 through 8 {
+            .mt-dloading-border-#{$i} {
+                transform: rotate($i * 45deg);
+            }
+            @if $i > 1 {
+                .mt-dloading-border-#{$i} .mt-dloading-item {
+                    animation-delay: (-1.35 + 0.15 * $i) * 1s;
+                    -webkit-animation-delay: (-1.35 + 0.15 * $i) * 1s;
+                }
             }
         }
     }
+    
     @-webkit-keyframes dloading {
         0% {opacity: 0;}
         33% {opacity: 0;}
