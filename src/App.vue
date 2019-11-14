@@ -1,9 +1,8 @@
 <template>
   <div id="app">
     <button @click="changeStatus">changeLoading</button>
-    <div v-pianoLoading="dloading"
-      style="width: 300px;height:100px; position: relative; background-color: #333;">
-    </div>
+
+    <mt-progress></mt-progress>
     <!-- <piano-loading></piano-loading> -->
     <!-- <div v-dloading="dloading" class="temp">
       333333
@@ -14,7 +13,11 @@
   </div>
 </template>
 <script>
+import MTProgress from '@/components/progress/app.vue';
 export default {
+  components: {
+    'mt-progress': MTProgress
+  },
   data () {
     return {
       dloading: false
