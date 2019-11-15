@@ -1,29 +1,43 @@
 <template>
   <div id="app">
-    <button @click="changeStatus">changeLoading</button>
+    <button @click="testRun">changeLoading</button>
 
-    <mt-progress></mt-progress>
-    <!-- <piano-loading></piano-loading> -->
-    <!-- <div v-dloading="dloading" class="temp">
-      333333
-    </div>
-    <div v-loading="dloading"
-      style="width: 50px;height: 20px; position: relative; background-color: #333;">
-    </div> -->
+    <!-- <mt-progress :progress="process"></mt-progress> -->
+
+    <test-progress :progress="process"></test-progress>
+
   </div>
 </template>
 <script>
-import MTProgress from '@/components/progress/app.vue';
+import testProgress from '@/components/progress/testApp.vue';
+// import MTProgress from '@/components/progress/app.vue';
 export default {
   components: {
-    'mt-progress': MTProgress
+    // 'mt-progress': MTProgress,
+    'test-progress': testProgress
   },
   data () {
     return {
-      dloading: false
+      dloading: false,
+      process: 0
     }
   },
   methods: {
+    testRun () {
+      this.process = 0;
+      this.test()
+    },
+    test () {
+      if (this.process >= 100) {
+        return
+      } else {
+        this.process = this.process + 5;
+        setTimeout(() => {
+         this.test()
+        }, 100)
+      }
+    },
+
     changeStatus () {
       this.dloading = !this.dloading;
     }

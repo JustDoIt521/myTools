@@ -1,4 +1,4 @@
-import piano from "./loading.vue";
+import piano from "./app.vue";
 
 export default {
     install (Vue) {

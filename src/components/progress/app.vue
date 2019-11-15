@@ -4,7 +4,7 @@
             <div class="mt-progress-second"></div>
 
             <div class="mt-progress-center">
-                <span>{{`${progress}%`}}</span>
+                <span>{{`${progressing}%`}}</span>
             </div>
     </div>
 </template>
@@ -30,60 +30,60 @@ export default {
     name: 'mtprogress',
     data () {
         return {
-            progress: 0
+            dom: null,
+            first: null,
+            second: null
         }
     },
+
+    props: {
+        waitColor: {
+            type: String,
+            default: '#333'
+        },
+        startColor: {
+            type: String,
+            default: '#1E90FF'
+        },
+        endColor: {
+            type: String,
+            default: 'green'
+        },
+        progress: {
+            type: Number,
+            default: 0
+        }
+    },
+    computed: {
+        progressing () {
+            this.rotate(this.progress)
+            return this.progress
+        }
+    },
+
     mounted () {
-        console.warn(this.$el)
+        this.dom = this.$el;
+        this.first = this.$el.childNodes[0];
+        this.second = this.$el.childNodes[1];
+        this.origin();
     },
     methods: {
-        resetDom (dom, first, second) {
-            dom.style.backgroundColor="#1E90FF";
-            first.style.WebkitTransform = `rotate(0deg)`;
-            first.style.zIndex = 2;
-            second.style.WebkitTransform = `rotate(0deg)`;
-            second.style.zIndex = 1;
-            this.rotateIt(0, dom, first, second);
+        origin () {
+            this.dom.style = `background-color: ${this.waitColor}`;
+            this.first.style = `background-color: ${this.waitColor}; z-index: 2; transform: rotate(0deg);`;
+            this.second.style = `background-color: ${this.startColor}; z-index: 1; transform: rotate(0deg);`;
         },
 
-        startRun (el) {
-            console.warn(el)
-            let dom = {}
-            if (el.target.className === 'mt-progress') {
-                dom = el.path[0]
-            } else if (el.target.tagName === 'SPAN') {
-                dom = el.path[2]
-            } else {
-                dom = el.path[1]
+        rotate (percent) {
+            if (this.dom && this.first && this.second) {
+               if (percent <= 50) {
+                    this.first.style.WebkitTransform = `rotate(${percent * 3.6}deg)`;
+                } else {
+                    this.second.style.zIndex = 3;
+                    this.second.style.WebkitTransform = `rotate(${percent * 3.6 - 180}deg)`;
+                    this.dom.style = `background-color: ${this.startColor};`;
+                }
             }
-            // return
-            this.progress = 0;
-            let [dfirst, dsecond] = dom.childNodes;
-            this.resetDom(dom, dfirst, dsecond)
-        },
-
-        getEvent (el, index) {
-            console.warn(el);
-            console.warn(index);
-        },
-
-        rotateIt (percent, dom, first, second) {
-            this.progress = percent;
-            if (percent <= 50) {
-                first.style.WebkitTransform = `rotate(${percent * 3.6}deg)`;
-            } else {
-                second.style.zIndex=3;
-                second.style.WebkitTransform = `rotate(${percent * 3.6 - 180}deg)`;
-                dom.style.backgroundColor = "#333";
-            }
-             if (percent >= 100) {
-                 return
-             } else {
-                 percent = percent + 5;
-             }
-             setTimeout(() => {
-                 this.rotateIt(percent, dom, first, second)
-             }, 100);
         }
     }
 }
@@ -94,7 +94,6 @@ export default {
     height: 100px;
     border-radius: 50%;
 
-    background-color: #1E90FF;
     position: relative;
     .mt-click {
         position: absolute;
@@ -132,16 +131,13 @@ export default {
         transition: transform .05s;
         
         border-radius: 50%;
+
     }
     .mt-progress-first {
-        z-index: 2;
         clip: rect(0, 100px, 100px, 50px);
-        background-color:#1E90FF;
     }
     .mt-progress-second {
-        z-index: 1;
         clip: rect(0px, 100px, 100px, 50px);
-        background-color: #333;
     }
 }
 </style>

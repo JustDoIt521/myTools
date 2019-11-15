@@ -1,4 +1,4 @@
-import dloading from './loading.vue'
+import dloading from './app.vue'
 
 export default {
     install (Vue) {
