@@ -1,6 +1,6 @@
 <template>
     <div class="canvasTest" >
-        <canvas id="canvas" width="200" height="200"></canvas>
+        <canvas id="canvas" :width="width" :height="height"></canvas>
         <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">{{progressing}}%</span>
     </div>
 </template>
@@ -13,13 +13,36 @@ export default {
             ctxObj: {
                 begin: -Math.PI / 2,
                 end: -Math.PI / 2
-            }
+            },
+            width: 200,
+            height: 200,
+            r: 0
         }
     },
     props: {
         progress: {
             type: Number,
             default: 0
+        },
+
+        radius: {
+            type: Number,
+            default: -1
+        },
+
+        defaultColor: {
+            type: String,
+            default: '#1E90FF'
+        },
+
+        progressColor: {
+            type: String,
+            default: '#DCDCDC'
+        },
+
+        lineWidth: {
+            type: Number,
+            default: 15
         }
     },
     computed: {
@@ -29,12 +52,23 @@ export default {
         }
     },
     mounted() {
-        this.ctx = this.$el.childNodes[0].getContext('2d');
-        this.ctx.beginPath();
-        this.ctx.arc(100, 100, 50, 0, Math.PI * 2, false); // 绘制
-        this.ctx.strokeStyle = '#1E90FF';
-        this.ctx.lineWidth = 15;
-        this.ctx.stroke();
+        // console.warn(window.getComputedStyle(this.$el, null).width)
+        // console.warn(parseInt(style.width));
+        // console.warn(parseInt(style.height));
+        let style = window.getComputedStyle(this.$el, null);
+        this.width = parseInt(style.width);
+        this.height = parseInt(style.height);
+         if (this.radius === -1) {
+            this.r = (this.width < this.height ? this.width / 2 : this.height / 2) - this.lineWidth;
+        }
+        this.$nextTick(() => {
+            this.ctx = this.$el.childNodes[0].getContext('2d');
+            this.ctx.beginPath();
+            this.ctx.arc(this.width / 2, this.height / 2, this.r, 0, Math.PI * 2, false); // 绘制
+            this.ctx.strokeStyle = this.defaultColor;
+            this.ctx.lineWidth = this.lineWidth;
+            this.ctx.stroke();
+        })
     },
     methods: {
         runing (percent) {
@@ -42,10 +76,9 @@ export default {
             this.ctx.beginPath();
             this.ctxObj.begin = this.ctxObj.end;
             this.ctxObj.end = Math.PI * (percent - 25) / 50;
-            this.ctx.arc(100, 100, 50, this.ctxObj.begin, this.ctxObj.end, false);
-            // this.ctx.arc(100, 100, 50, -Math.PI / 2, this.ctxObj.end, false);            
-            this.ctx.strokeStyle = `#DCDCDC`;
-            this.ctx.lineWidth = 15;
+            this.ctx.arc(this.width / 2, this.height / 2, this.r, this.ctxObj.begin, this.ctxObj.end, false);
+            this.ctx.strokeStyle = this.progressColor;
+            this.ctx.lineWidth = this.lineWidth;
             this.ctx.stroke();
         }
     }
@@ -53,8 +86,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .canvasTest {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
     outline: 1px solid #333;
 
     position: relative;

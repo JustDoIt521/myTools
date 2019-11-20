@@ -2,7 +2,7 @@
   <div id="app">
     <button @click="testRun">changeLoading</button>
 
-    <!-- <mt-progress :progress="process"></mt-progress> -->
+    <mt-progress :progress="process"></mt-progress>
 
     <test-progress :progress="process"></test-progress>
 
@@ -10,10 +10,10 @@
 </template>
 <script>
 import testProgress from '@/components/progress/testApp.vue';
-// import MTProgress from '@/components/progress/app.vue';
+import MTProgress from '@/components/progress/app.vue';
 export default {
   components: {
-    // 'mt-progress': MTProgress,
+    'mt-progress': MTProgress,
     'test-progress': testProgress
   },
   data () {
