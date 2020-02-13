@@ -1,25 +1,28 @@
 <template>
   <div id="app">
-    <button @click="testRun">changeLoading</button>
-
-    <mt-progress :progress="process"></mt-progress>
-
-    <test-progress :progress="process"></test-progress>
-
+    <div class="broadcast">
+      <mt-broadcast :list="list" :duration="2000"></mt-broadcast>
+    </div>
   </div>
 </template>
 <script>
-import testProgress from '@/components/progress/testApp.vue';
-import MTProgress from '@/components/progress/app.vue';
+import broadCast from '@/components/broadcast/app.vue';
 export default {
   components: {
-    'mt-progress': MTProgress,
-    'test-progress': testProgress
+    'mt-broadcast': broadCast
   },
   data () {
     return {
       dloading: false,
-      process: 0
+      process: 0,
+      list: []
+    }
+  },
+  mounted () {
+    for (let i = 0; i < 10; i++) {
+      this.list.push({
+        name: `name-${i}`
+      })
     }
   },
   methods: {
@@ -56,6 +59,13 @@ export default {
     width: 100px;
     height: 50px;
     outline: 1px solid #333;
+  }
+  .broadcast {
+    width: 100px;
+    height: 50px;
+    text-align: center;
+
+    outline: 2px solid #1E90FF;
   }
 }
 </style>
