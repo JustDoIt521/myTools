@@ -1,10 +1,10 @@
 <template>
     <div class="mt-broadcast">
         <transition name="buttonOn">
-            <p v-if="showValue" key="bOn">
+            <p class="line" v-if="showValue" key="bOn">
                 {{nowValue}}
             </p>
-            <p v-else key="bOff">
+            <p class="line" v-else key="bOff">
                 {{nextValue}}
             </p>
         </transition>
@@ -14,6 +14,7 @@
 export default {
     name: 'mtbroadcast',
     props: {
+        // 数组列表
         list: {
             type: Array,
             required: true,
@@ -21,14 +22,20 @@ export default {
                 return []
             }
         },
+        // 展示时间间隔
         duration: {
             type: Number,
             default: 1000
+        },
+        // 对象数组键值
+        keyValue: {
+            type: String,
+            default: ''
         }
     },
     watch: {
         list () {
-            this.nowValue = this.list[0].name;
+            this.nowValue = this.keyValue ? this.list[0][this.keyValue] : this.list[0];
             this.next++;
             this.timeout();
         }
@@ -59,9 +66,9 @@ export default {
                 this.next = 0;
             }
             if (this.showValue) {
-                this.nextValue = this.list[this.next].name;
+                this.nextValue =  this.keyValue ? this.list[this.next][this.keyValue] : this.list[this.next];
             } else {
-                this.nowValue = this.list[this.next].name;
+                this.bowValue =  this.keyValue ? this.list[this.next][this.keyValue] : this.list[this.next];
             }
             this.showValue = !this.showValue;
             this.next++;
@@ -73,14 +80,14 @@ export default {
 .mt-broadcast {
     position: relative;
     text-align: center;
-    p {
+    .line {
         position: absolute;
         top: 50%;
         
-        line-height: 1;
-        // transform: translate(0%, -50%);
-
         width: 100%;
+
+        line-height: 1;
+        white-space: nowrap;
     }
     .buttonOn-enter-active, .buttonOn-leave-active {
         transition: all 1s ease;
